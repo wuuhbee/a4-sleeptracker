@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton} from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton, ActionSheetController, ModalController} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { moon, home, addCircle, personCircle, bedOutline, moonOutline, close } from 'ionicons/icons';
 import { SleepService } from '../services/sleep.service';
 import { SleepData } from '../data/sleep-data';
 import { OvernightSleepData } from '../data/overnight-sleep-data';
 import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
-import { ActionSheetController } from '@ionic/angular';
+import { AddSleepComponent } from '../add-sleep/add-sleep.component';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +15,7 @@ import { ActionSheetController } from '@ionic/angular';
   imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton],
 })
 export class HomePage {
-  constructor(public sleepService:SleepService, public actionSheetController: ActionSheetController) {
+  constructor(public sleepService:SleepService, public actionSheetController: ActionSheetController, public modalController: ModalController) {
 	addIcons({ moon, home, addCircle, personCircle, bedOutline, moonOutline, close });
 	}
 
@@ -28,7 +28,7 @@ export class HomePage {
 		return SleepService.AllSleepData;
 	}
 
-	async presentActionSheet(event: Event) {
+	presentActionSheet(event: Event) {
 		if (event) {
 			event.preventDefault(); // Prevent the default behavior of the event
 		}
@@ -41,7 +41,7 @@ export class HomePage {
 					icon: 'bed-outline',
 					handler: () => {
 						console.log('Log My Sleep clicked');
-						// Add your logic for logging sleep here
+						this.addSleep();
 					}
 				},
 				{
@@ -64,5 +64,27 @@ export class HomePage {
 	}).then((actionSheet) => {
 		actionSheet.present();
 	});
+	}
+
+	async addSleep() {
+		var modal =  await this.modalController.create({
+			component: AddSleepComponent,
+			componentProps: { name: 'Add Sleep Data' }
+		});
+		await modal.present();
+
+		const { data, role } = await modal.onWillDismiss();
+				// if (data.role === 'log') {
+				// 	const sleepStart = data.data.sleepStart;
+				// 	const sleepEnd = data.data.sleepEnd;
+				// 	if (sleepStart && sleepEnd) {
+				// 		this.sleepService.logOvernightData(new OvernightSleepData(sleepStart, sleepEnd));
+				// 	}
+				// }
+		if (role === 'log') {
+			console.log('Sleep data logged:', data);
+			// const sleepStart = data.sleepStart;
+			// const sleepEnd = data.sleepEnd;
+		}
 	}
 }
