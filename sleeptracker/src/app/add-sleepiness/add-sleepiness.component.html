@@ -1,3 +1,27 @@
-<p>
-  add-sleepiness works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="dismissModal()">
+      <ion-icon name="close"></ion-icon>
+    </ion-buttons>
+    <ion-title>Log My Sleepiness</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logSleepiness()">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="sleepiness-rating">
+    <ion-label>How sleepy are you right now? (1-7)</ion-label>
+    <ion-radio-group [(ngModel)]="sleepinessScore" id="sleepinessScore" class="rating-options">
+      @for (score of sleepinessScores; track score) {
+        <ion-radio [value]="score" labelPlacement="stacked">{{ score }}</ion-radio>
+      }
+    </ion-radio-group>
+    <p class="rating-description" aria-live="polite">{{ sleepinessDescription }}</p>
+  </div>
+  <ion-item>
+    <ion-label position="stacked">When did you log this?</ion-label>
+    <ion-datetime locale="en-US" [(ngModel)]="loggedAt" presentation="date-time" [preferWheel]="true" id="loggedAt" size="fixed"></ion-datetime>
+  </ion-item>
+</ion-content>

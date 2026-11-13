@@ -7,12 +7,14 @@ import { SleepData } from '../data/sleep-data';
 import { OvernightSleepData } from '../data/overnight-sleep-data';
 import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
 import { AddSleepComponent } from '../add-sleep/add-sleep.component';
+import { RouterLink } from '@angular/router';
+import { AddSleepinessComponent } from '../add-sleepiness/add-sleepiness.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton],
+  imports: [RouterLink, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton],
 })
 export class HomePage {
   constructor(public sleepService:SleepService, public actionSheetController: ActionSheetController, public modalController: ModalController) {
@@ -49,7 +51,7 @@ export class HomePage {
 					icon: 'moon-outline',
 					handler: () => {
 						console.log('Log My Sleepiness clicked');
-						// Add your logic for logging sleepiness here
+						this.addSleepiness();
 					}
 				},
 				{
@@ -67,25 +69,28 @@ export class HomePage {
 	}
 
 	async addSleep() {
-		const now = new Date().toISOString();
 		var modal =  await this.modalController.create({
 			component: AddSleepComponent,
-			componentProps: { sleepStart: now, sleepEnd: now, wakeCount: 0 }
+			componentProps: { wakeCount: 0 }
 		});
 		await modal.present();
 
-		const { data, role } = await modal.onWillDismiss();
-				// if (data.role === 'log') {
-				// 	const sleepStart = data.data.sleepStart;
-				// 	const sleepEnd = data.data.sleepEnd;
-				// 	if (sleepStart && sleepEnd) {
-				// 		this.sleepService.logOvernightData(new OvernightSleepData(sleepStart, sleepEnd));
-				// 	}
-				// }
+		const { data, role } = await modal.onWillDismiss(); // data = OvernightSleepData object
 		if (role === 'log') {
-			console.log('Sleep data logged:', data);
-			// const sleepStart = data.sleepStart;
-			// const sleepEnd = data.sleepEnd;
+			console.log('Sleep data logged:', data.summaryString());
+		}
+	}
+
+	async addSleepiness() {
+		var modal =  await this.modalController.create({
+			component: AddSleepinessComponent,
+			componentProps: { sleepinessScore: 0 }
+		});
+		await modal.present();
+
+		const {data, role} = await modal.onWillDismiss();  // data = StandfordSleepinessData object
+		if (role === 'log') {
+			console.log('Sleepiness data logged:', data.summaryString());
 		}
 	}
 }

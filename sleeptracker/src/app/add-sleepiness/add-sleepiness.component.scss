@@ -1,0 +1,14 @@
+.sleepiness-rating {
+  padding: 16px;
+}
+
+.rating-options {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.rating-description {
+  min-height: 1.5em;
+}
