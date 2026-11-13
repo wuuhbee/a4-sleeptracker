@@ -9,8 +9,8 @@ import { IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonItem, IonIcon
   imports: [FormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonItem, IonIcon, IonButtons, IonDatetime, IonButton, IonInput]
 })
 export class AddSleepComponent  implements OnInit {
-  sleepStart?: Date;
-  sleepEnd?: Date;
+  sleepStart = new Date().toISOString();
+  sleepEnd = new Date().toISOString();
   wakeCount?: number;
 
   constructor(private modalController: ModalController) { }
@@ -22,7 +22,11 @@ export class AddSleepComponent  implements OnInit {
   }
 
   logSleep() {
-    this.modalController.dismiss({ sleepStart: this.sleepStart, sleepEnd: this.sleepEnd, wakeCount: this.wakeCount }, 'log');
+    this.modalController.dismiss({
+      sleepStart: new Date(this.sleepStart),
+      sleepEnd: new Date(this.sleepEnd),
+      wakeCount: this.wakeCount
+    }, 'log');
   }
 
 }

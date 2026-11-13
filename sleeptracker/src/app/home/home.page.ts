@@ -67,9 +67,10 @@ export class HomePage {
 	}
 
 	async addSleep() {
+		const now = new Date().toISOString();
 		var modal =  await this.modalController.create({
 			component: AddSleepComponent,
-			componentProps: { name: 'Add Sleep Data' }
+			componentProps: { sleepStart: now, sleepEnd: now, wakeCount: 0 }
 		});
 		await modal.present();
 
