@@ -12,7 +12,14 @@
       <ion-title size="large">Hi John!</ion-title>
     </ion-toolbar>
   </ion-header>
-  <!-- Add graph to show the last 7 days of sleep data -->
+  <ion-item>
+    View all Data: 
+    <ion-button href="sleep-data">All Sleep Data</ion-button>
+    <ion-button href="sleepiness-data">All Sleepiness Data</ion-button>
+  </ion-item>
+  <ion-item>
+    <!-- Add graph to show the last 7 days of sleep data -->
+  </ion-item>
 
 </ion-content>
 
@@ -22,7 +29,7 @@
     <ion-tab-button tab="home"> 
       <ion-icon name="home"></ion-icon>
     </ion-tab-button>
-    <ion-tab-button tab="add">
+    <ion-tab-button (click)="presentActionSheet($event)">
       <ion-icon name="add-circle"></ion-icon>
     </ion-tab-button>
     <ion-tab-button tab="profile">
