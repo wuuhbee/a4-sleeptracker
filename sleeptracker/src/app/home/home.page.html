@@ -1,20 +1,32 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      <ion-icon name="moon" size="large"></ion-icon>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <ion-header>
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">Hi John!</ion-title>
     </ion-toolbar>
   </ion-header>
+  <!-- Add graph to show the last 7 days of sleep data -->
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
 </ion-content>
+
+<ion-tabs slot="bottom">
+  <ion-tab-bar>
+    <!-- TODO: Add routing and links for each tab -->
+    <ion-tab-button tab="home"> 
+      <ion-icon name="home"></ion-icon>
+    </ion-tab-button>
+    <ion-tab-button tab="add">
+      <ion-icon name="add-circle"></ion-icon>
+    </ion-tab-button>
+    <ion-tab-button tab="profile">
+      <ion-icon name="person-circle"></ion-icon>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

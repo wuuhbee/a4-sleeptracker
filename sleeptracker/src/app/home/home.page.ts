@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton} from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { moon, home, addCircle, personCircle } from 'ionicons/icons';
 import { SleepService } from '../services/sleep.service';
 import { SleepData } from '../data/sleep-data';
 import { OvernightSleepData } from '../data/overnight-sleep-data';
@@ -9,11 +11,11 @@ import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton],
 })
 export class HomePage {
   constructor(public sleepService:SleepService) {
-
+	addIcons({ moon, home, addCircle, personCircle });
 	}
 
 	ngOnInit() {
