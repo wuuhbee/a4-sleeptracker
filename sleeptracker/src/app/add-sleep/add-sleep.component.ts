@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonButtons, ModalController, IonDatetime, IonButton, IonInput } from '@ionic/angular/standalone';
+import { FormsModule } from '@angular/forms';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonItem, IonIcon, IonButtons, ModalController, IonDatetime, IonButton, IonInput } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-add-sleep',
   templateUrl: './add-sleep.component.html',
   styleUrls: ['./add-sleep.component.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonButtons, IonDatetime, IonButton, IonInput]
+  imports: [FormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonItem, IonIcon, IonButtons, IonDatetime, IonButton, IonInput]
 })
 export class AddSleepComponent  implements OnInit {
   sleepStart?: Date;
   sleepEnd?: Date;
-  name?: string;
+  wakeCount?: number;
 
   constructor(private modalController: ModalController) { }
 
@@ -21,7 +22,7 @@ export class AddSleepComponent  implements OnInit {
   }
 
   logSleep() {
-    this.modalController.dismiss({ sleepStart: this.sleepStart, sleepEnd: this.sleepEnd, name: this.name }, 'log');
+    this.modalController.dismiss({ sleepStart: this.sleepStart, sleepEnd: this.sleepEnd, wakeCount: this.wakeCount }, 'log');
   }
 
 }

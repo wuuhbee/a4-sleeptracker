@@ -11,7 +11,17 @@
 </ion-header>
 
 <ion-content>
-  <!-- <ion-datatime-picker [(ngModel)]="sleepData.startTime" displayFormat="MMM DD, YYYY HH:mm" placeholder="Select Start Time"></ion-datetime-picker> -->
-  <!-- <ion-datetime-picker [(ngModel)]="sleepData.endTime" displayFormat="MMM DD, YYYY HH:mm" placeholder="Select End Time"></ion-datetime-picker> -->
-  <!-- <ion-input [(ngModel)]="sleepData.name" placeholder="Enter Name"></ion-input> -->
+  <ion-item>
+    <ion-label position="stacked">When did you sleep?</ion-label>
+    <ion-datetime [(ngModel)]="sleepStart" presentation="date-time" [preferWheel]="true" id="sleepStart" size="fixed"></ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">When did you wake up?</ion-label>
+    <ion-datetime [(ngModel)]="sleepEnd" presentation="date-time" [preferWheel]="true" id="sleepEnd"></ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">How many times did you wake up during the night?</ion-label>
+    <ion-input type="number" [(ngModel)]="wakeCount" id="wakeCount" placeholder="Enter number of times"></ion-input>
+  </ion-item>
+
 </ion-content>
