@@ -47,4 +47,16 @@ export class SleepService {
 		SleepService.AllSleepData.push(sleepData);
 		SleepService.AllSleepinessData.push(sleepData);
 	}
+
+	public getAllSleepData():SleepData[] {
+		return SleepService.AllSleepData;
+	}
+
+	public getAllOvernightData():OvernightSleepData[] {
+		return SleepService.AllOvernightData;
+	}
+
+	public getAllSleepinessData():StanfordSleepinessData[] {
+		return SleepService.AllSleepinessData;
+	}
 }

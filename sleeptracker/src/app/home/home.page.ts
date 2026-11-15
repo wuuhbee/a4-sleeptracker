@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton, ActionSheetController, ModalController} from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton, ActionSheetController, ModalController, IonLabel} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { moon, home, addCircle, personCircle, bedOutline, moonOutline, close } from 'ionicons/icons';
 import { SleepService } from '../services/sleep.service';
@@ -14,7 +14,7 @@ import { AddSleepinessComponent } from '../add-sleepiness/add-sleepiness.compone
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [RouterLink, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton],
+  imports: [RouterLink, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton, IonLabel],
 })
 export class HomePage {
   constructor(public sleepService:SleepService, public actionSheetController: ActionSheetController, public modalController: ModalController) {
@@ -77,7 +77,8 @@ export class HomePage {
 
 		const { data, role } = await modal.onWillDismiss(); // data = OvernightSleepData object
 		if (role === 'log') {
-			console.log('Sleep data logged:', data.summaryString());
+			this.sleepService.logOvernightData(data);
+			// console.log('All Overnight Sleep Data:', this.sleepService.getAllOvernightData().map(d => d.summaryString()));
 		}
 	}
 
@@ -90,7 +91,9 @@ export class HomePage {
 
 		const {data, role} = await modal.onWillDismiss();  // data = StandfordSleepinessData object
 		if (role === 'log') {
-			console.log('Sleepiness data logged:', data.summaryString());
+			this.sleepService.logSleepinessData(data);
+			// console.log('All Sleepiness Data:', this.sleepService.getAllSleepinessData().map(d => d.summaryString()));
+
 		}
 	}
 }
