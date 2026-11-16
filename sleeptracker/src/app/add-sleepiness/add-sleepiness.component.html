@@ -12,7 +12,7 @@
 
 <ion-content>
   <div class="sleepiness-rating">
-    <ion-label>How sleepy are you right now? (1-7)</ion-label>
+    <ion-label>How sleepy are you right now?</ion-label>
     <ion-radio-group [(ngModel)]="sleepinessScore" id="sleepinessScore" class="rating-options">
       @for (score of sleepinessScores; track score) {
         <ion-radio [value]="score" labelPlacement="stacked">{{ score }}</ion-radio>
@@ -20,8 +20,4 @@
     </ion-radio-group>
     <p class="rating-description" aria-live="polite">{{ sleepinessDescription }}</p>
   </div>
-  <ion-item>
-    <ion-label position="stacked">When did you log this?</ion-label>
-    <ion-datetime locale="en-US" [(ngModel)]="loggedAt" presentation="date-time" [preferWheel]="true" id="loggedAt" size="fixed"></ion-datetime>
-  </ion-item>
 </ion-content>

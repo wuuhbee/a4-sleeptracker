@@ -84,8 +84,7 @@ export class HomePage {
 
 	async addSleepiness() {
 		var modal =  await this.modalController.create({
-			component: AddSleepinessComponent,
-			componentProps: { sleepinessScore: 0 }
+			component: AddSleepinessComponent
 		});
 		await modal.present();
 
@@ -113,5 +112,10 @@ export class HomePage {
 		const averageSleepDuration = totalSleepDuration / last7DaysSleepData.length;
 
 		return averageSleepDuration.toFixed(2) + " hours";
+	}
+
+	getCurrentTime(): string {
+		const now = new Date();
+		return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 	}
 }

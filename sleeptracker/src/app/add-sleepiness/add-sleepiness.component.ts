@@ -32,7 +32,7 @@ export class AddSleepinessComponent  implements OnInit {
   logSleepiness() {
     this.modalController.dismiss(
       new StanfordSleepinessData(this.sleepinessScore, new Date(this.loggedAt))
-    , 'log');
+    , 'log');    
   }
 
   dismissModal() {
