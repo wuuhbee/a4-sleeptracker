@@ -43,6 +43,13 @@ export class AddSleepComponent  implements OnInit {
       new Date(this.sleepEnd),
       this.wakeCount
     ), 'log');
+
+      this.toastController.create({
+        message:"Successfully logged last night's sleep!",
+        duration: 2000
+      }).then((toast) => {
+        toast.present();
+      });
     }
   }
 }

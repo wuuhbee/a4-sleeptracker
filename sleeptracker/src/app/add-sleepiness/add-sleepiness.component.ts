@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonItem, IonIcon, IonButtons, ModalController, IonDatetime, IonButton, IonInput, IonRadio, IonRadioGroup } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonItem, IonIcon, IonButtons, ModalController, IonDatetime, IonButton, IonInput, IonRadio, IonRadioGroup, ToastController } from '@ionic/angular/standalone';
 import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
 
 const localDateTimeValue = (): string => {
@@ -21,7 +21,7 @@ export class AddSleepinessComponent  implements OnInit {
   sleepinessScore: number = 1;
   loggedAt = localDateTimeValue();
 
-  constructor(public modalController: ModalController) { }
+  constructor(private modalController: ModalController, private toastController: ToastController) { }
 
   ngOnInit() {}
 
@@ -32,7 +32,14 @@ export class AddSleepinessComponent  implements OnInit {
   logSleepiness() {
     this.modalController.dismiss(
       new StanfordSleepinessData(this.sleepinessScore, new Date(this.loggedAt))
-    , 'log');    
+    , 'log');
+
+    this.toastController.create({
+        message:"Successfully logged your current level of sleepiness!",
+        duration: 2000
+      }).then((toast) => {
+        toast.present();
+      });
   }
 
   dismissModal() {
