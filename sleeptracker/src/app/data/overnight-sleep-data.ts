@@ -13,14 +13,15 @@ export class OvernightSleepData extends SleepData {
 	}
 
 	override summaryString():string {
-		var sleepStart_ms = this.sleepStart.getTime();
-		var sleepEnd_ms = this.sleepEnd.getTime();
-
-		// Calculate the difference in milliseconds
-		var difference_ms = sleepEnd_ms - sleepStart_ms;
-		    
+		var difference_ms = this.getSleepDurationMS();		    
 		// Convert to hours and minutes
 		return Math.floor(difference_ms / (1000*60*60)) + " hours, " + Math.floor(difference_ms / (1000*60) % 60) + " minutes, " + this.wakeCount + " interruptions";
+	}
+
+	getSleepDurationMS():number {
+		var sleepStart_ms = this.sleepStart.getTime();
+		var sleepEnd_ms = this.sleepEnd.getTime();
+		return sleepEnd_ms - sleepStart_ms;
 	}
 
 	override dateString():string {

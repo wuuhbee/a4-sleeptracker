@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton, ActionSheetController, ModalController, IonLabel} from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton, ActionSheetController, ModalController, IonLabel, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonThumbnail } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { moon, home, addCircle, personCircle, bedOutline, moonOutline, close } from 'ionicons/icons';
 import { SleepService } from '../services/sleep.service';
@@ -14,7 +14,7 @@ import { AddSleepinessComponent } from '../add-sleepiness/add-sleepiness.compone
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [RouterLink, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton, IonLabel],
+  imports: [RouterLink, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton, IonLabel, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonThumbnail],
 })
 export class HomePage {
   constructor(public sleepService:SleepService, public actionSheetController: ActionSheetController, public modalController: ModalController) {
@@ -95,5 +95,23 @@ export class HomePage {
 			// console.log('All Sleepiness Data:', this.sleepService.getAllSleepinessData().map(d => d.summaryString()));
 
 		}
+	}
+
+	averageSleepDurationLast7Days(): string {
+		const now = new Date();
+		const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+		const last7DaysSleepData = this.sleepService.getAllOvernightData().filter(data => data.loggedAt >= sevenDaysAgo);
+		
+		if (last7DaysSleepData.length === 0) {
+			return "No sleep data for the last 7 days.";
+		}
+
+		const totalSleepDuration = last7DaysSleepData.reduce((sum, data) => {
+			return sum + data.getSleepDurationMS() / (1000 * 60 * 60); // Convert milliseconds to hours
+		}, 0);
+		const averageSleepDuration = totalSleepDuration / last7DaysSleepData.length;
+
+		return averageSleepDuration.toFixed(2) + " hours";
 	}
 }

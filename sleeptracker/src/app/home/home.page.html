@@ -19,6 +19,18 @@
   </ion-item>
   <ion-item>
     <!-- Add graph to show the last 7 days of sleep data -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Last 7 days:</ion-card-title>
+        <ion-thumbnail slot="end">
+          <ion-icon name="bed-outline"></ion-icon>
+        </ion-thumbnail>
+        <p>AVERAGE: {{averageSleepDurationLast7Days()}}</p>
+      </ion-card-header>
+      <ion-card-content>
+        <!-- Graph content goes here -->
+      </ion-card-content>
+    </ion-card>
   </ion-item>
 
 </ion-content>
