@@ -12,10 +12,10 @@ export const routes: Routes = [
   },
   {
     path: 'sleep-data',
-    loadComponent: () => import('./sleep-data/sleep-data.page').then( m => m.SleepDataPage)
+    loadComponent: () => import('./sleep-data/sleep-data.page').then( (m) => m.SleepDataPage)
   },
   {
-    path: 'sleepiness-data',
-    loadComponent: () => import('./sleepiness-data/sleepiness-data.page').then( m => m.SleepinessDataPage)
+    path: 'home/sleepiness-data',
+    loadComponent: () => import('./sleepiness-data/sleepiness-data.page').then( (m) => m.SleepinessDataPage)
   }
 ];
