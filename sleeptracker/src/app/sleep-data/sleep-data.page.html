@@ -1,13 +1,35 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>sleep-data</ion-title>
+    <ion-title>All Sleep Data</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">sleep-data</ion-title>
+      <ion-title size="large">All Sleep Data</ion-title>
     </ion-toolbar>
   </ion-header>
 </ion-content>
+
+<ion-tabs slot="bottom">
+  <ion-tab-bar>
+    <!-- TODO: Add routing and links for each tab -->
+    <ion-tab-button routerLink="/home">
+      <ion-icon name="home"></ion-icon>
+      <ion-label>Home</ion-label>
+    </ion-tab-button>
+    <ion-tab-button (click)="presentActionSheet($event)">
+      <ion-icon name="add-circle"></ion-icon>
+      <ion-label>Log</ion-label>
+    </ion-tab-button>
+    <ion-tab-button>
+      <ion-icon name="bed-outline"></ion-icon>
+      <ion-label>Sleep Data</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="profile">
+      <ion-icon name="person-circle"></ion-icon>
+      <ion-label>Profile</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
