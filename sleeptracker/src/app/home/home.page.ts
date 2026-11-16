@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton, ActionSheetController, ModalController, IonLabel, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonThumbnail } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton, ActionSheetController, ModalController, IonLabel, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonThumbnail, IonRouterLink } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { moon, home, addCircle, personCircle, bedOutline, moonOutline, close } from 'ionicons/icons';
 import { SleepService } from '../services/sleep.service';
@@ -7,14 +7,13 @@ import { SleepData } from '../data/sleep-data';
 import { OvernightSleepData } from '../data/overnight-sleep-data';
 import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
 import { AddSleepComponent } from '../add-sleep/add-sleep.component';
-import { RouterLink } from '@angular/router';
 import { AddSleepinessComponent } from '../add-sleepiness/add-sleepiness.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [RouterLink, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton, IonLabel, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonThumbnail],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton, IonLabel, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonThumbnail, IonRouterLink],
 })
 export class HomePage {
   constructor(public sleepService:SleepService, public actionSheetController: ActionSheetController, public modalController: ModalController) {
@@ -26,7 +25,6 @@ export class HomePage {
 		console.log(this.allSleepData);
 	}
 
-	/* Ionic doesn't allow bindings to static variables, so this getter can be used instead. */
 	get allSleepData() {
 		return SleepService.AllSleepData;
 	}
