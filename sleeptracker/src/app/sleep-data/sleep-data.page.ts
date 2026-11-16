@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton, ActionSheetController, ModalController, IonLabel, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonThumbnail } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton, ActionSheetController, ModalController, IonLabel, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonThumbnail, IonFab, IonFabButton, IonFabList } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { moon, home, addCircle, personCircle, bedOutline, moonOutline, close } from 'ionicons/icons';
+import { moon, home, addCircle, personCircle, bedOutline, moonOutline, close, sparkles } from 'ionicons/icons';
 import { SleepService } from '../services/sleep.service';
 import { SleepData } from '../data/sleep-data';
 import { OvernightSleepData } from '../data/overnight-sleep-data';
@@ -17,12 +17,12 @@ import { RouterLink } from '@angular/router';
   templateUrl: './sleep-data.page.html',
   styleUrls: ['./sleep-data.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonTabs, IonTabButton, IonTabBar, IonIcon, IonLabel, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonThumbnail, RouterLink ]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonTabs, IonTabButton, IonTabBar, IonIcon, IonLabel, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonThumbnail, RouterLink, IonFab, IonFabButton, IonFabList ]
 })
 export class SleepDataPage implements OnInit {
 
   constructor(public sleepService:SleepService, public actionSheetController: ActionSheetController, public modalController: ModalController) {
-	addIcons({ moon, home, addCircle, personCircle, bedOutline, moonOutline, close });
+	addIcons({ moon, home, addCircle, personCircle, bedOutline, moonOutline, close, sparkles });
 	}
 
 	async ngOnInit() {

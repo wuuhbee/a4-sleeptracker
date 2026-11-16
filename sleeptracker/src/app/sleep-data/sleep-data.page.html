@@ -1,20 +1,36 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>All Sleep Data</ion-title>
+    <ion-title>Past Sleep Logs</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">All Sleep Data</ion-title>
+      <ion-title size="large">Past Sleep Logs</ion-title>
     </ion-toolbar>
   </ion-header>
+  <!-- Add list of all the sleep logs in cards -->
+   <ion-card></ion-card>
+   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button>
+      <ion-icon name="add-circle"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button (click)="addSleep()">
+        <ion-icon name="bed-outline"></ion-icon>
+        <!-- <ion-label>Log Overnight Sleep</ion-label> -->
+      </ion-fab-button>
+      <ion-fab-button (click)="addSleepiness()">
+        <ion-icon name="moon-outline"></ion-icon>
+        <!-- <ion-label>Log Sleepiness</ion-label> -->
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>
 
 <ion-tabs slot="bottom">
   <ion-tab-bar>
-    <!-- TODO: Add routing and links for each tab -->
     <ion-tab-button routerLink="/home">
       <ion-icon name="home"></ion-icon>
       <ion-label>Home</ion-label>
