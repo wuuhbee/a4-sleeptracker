@@ -2,61 +2,157 @@ import { Injectable } from '@angular/core';
 import { SleepData } from '../data/sleep-data';
 import { OvernightSleepData } from '../data/overnight-sleep-data';
 import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
+import { StorageService } from './storage.service';
+
+const STORAGE_KEY = 'sleep-records';
+
+type StoredSleepRecord =
+	| {
+		type: 'overnight';
+		id: string;
+		loggedAt: string;
+		sleepStart: string;
+		sleepEnd: string;
+		wakeCount: number;
+	}
+	| {
+		type: 'sleepiness';
+		id: string;
+		loggedAt: string;
+		score: number;
+	};
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class SleepService {
-	private static LoadDefaultData:boolean = true;
-	public static AllSleepData:SleepData[] = [];
-	public static AllOvernightData:OvernightSleepData[] = [];
-	public static AllSleepinessData:StanfordSleepinessData[] = [];
+	public static AllSleepData: SleepData[] = [];
+	public static AllOvernightData: OvernightSleepData[] = [];
+	public static AllSleepinessData: StanfordSleepinessData[] = [];
 
-	constructor() {
-		if(SleepService.LoadDefaultData) {
+	readonly ready: Promise<void>;
+
+	constructor(private readonly storageService: StorageService) {
+		this.ready = this.loadData();
+	}
+
+	private async loadData(): Promise<void> {
+		const storedRecords = await this.storageService.get<StoredSleepRecord[]>(STORAGE_KEY);
+		this.clearData();
+
+		if (storedRecords === null) {
 			this.addDefaultData();
-		SleepService.LoadDefaultData = false;
-	}
+			await this.persistData();
+			return;
+		}
+
+		for (const record of storedRecords) {
+			this.addToMemory(this.restoreRecord(record));
+		}
 	}
 
-	private addDefaultData() {
-		var goToBed = new Date();
-		goToBed.setDate(goToBed.getDate() - 1); //set to yesterday
-		goToBed.setHours(1, 3, 0); //1:03am
-		var wakeUp = new Date();
-		wakeUp.setTime(goToBed.getTime() + 8 * 60 * 60 * 1000); //Sleep for exactly eight hours, waking up at 9:03am
-		this.logOvernightData(new OvernightSleepData(goToBed, wakeUp)); // add that person was asleep 1am-9am yesterday
-		var sleepinessDate = new Date();
-		sleepinessDate.setDate(sleepinessDate.getDate() - 1); //set to yesterday
-		sleepinessDate.setHours(14, 38, 0); //2:38pm
-		this.logSleepinessData(new StanfordSleepinessData(4, sleepinessDate)); // add sleepiness at 2pm
-		goToBed = new Date();
-		goToBed.setDate(goToBed.getDate() - 1); //set to yesterday
-		goToBed.setHours(23, 11, 0); //11:11pm
-		wakeUp = new Date();
-		wakeUp.setTime(goToBed.getTime() + 9 * 60 * 60 * 1000); //Sleep for exactly nine hours
-		this.logOvernightData(new OvernightSleepData(goToBed, wakeUp));
+	private restoreRecord(record: StoredSleepRecord): SleepData {
+		let data: SleepData;
+		if (record.type === 'overnight') {
+			data = new OvernightSleepData(
+				new Date(record.sleepStart),
+				new Date(record.sleepEnd),
+				record.wakeCount
+			);
+		} else {
+			data = new StanfordSleepinessData(record.score, new Date(record.loggedAt));
+		}
+
+		data.id = record.id;
+		data.loggedAt = new Date(record.loggedAt);
+		return data;
 	}
 
-	public logOvernightData(sleepData:OvernightSleepData) {
-		SleepService.AllSleepData.push(sleepData);
-		SleepService.AllOvernightData.push(sleepData);
+	private clearData(): void {
+		SleepService.AllSleepData.length = 0;
+		SleepService.AllOvernightData.length = 0;
+		SleepService.AllSleepinessData.length = 0;
 	}
 
-	public logSleepinessData(sleepData:StanfordSleepinessData) {
-		SleepService.AllSleepData.push(sleepData);
-		SleepService.AllSleepinessData.push(sleepData);
+	private addToMemory(data: SleepData): void {
+		SleepService.AllSleepData.push(data);
+		if (data instanceof OvernightSleepData) {
+			SleepService.AllOvernightData.push(data);
+		} else if (data instanceof StanfordSleepinessData) {
+			SleepService.AllSleepinessData.push(data);
+		}
 	}
 
-	public getAllSleepData():SleepData[] {
+	private serializeData(): StoredSleepRecord[] {
+		return SleepService.AllSleepData.map((data): StoredSleepRecord => {
+			if (data instanceof OvernightSleepData) {
+				return {
+					type: 'overnight',
+					id: data.id,
+					loggedAt: data.loggedAt.toISOString(),
+					sleepStart: data.getSleepStart().toISOString(),
+					sleepEnd: data.getSleepEnd().toISOString(),
+					wakeCount: data.getWakeCount()
+				};
+			}
+
+			if (data instanceof StanfordSleepinessData) {
+				return {
+					type: 'sleepiness',
+					id: data.id,
+					loggedAt: data.loggedAt.toISOString(),
+					score: data.getSleepinessScore()
+				};
+			}
+
+			throw new Error('Cannot persist unknown sleep data type.');
+		});
+	}
+
+	private async persistData(): Promise<void> {
+		await this.storageService.set(STORAGE_KEY, this.serializeData());
+	}
+
+	private addDefaultData(): void {
+		const goToBed = new Date();
+		goToBed.setDate(goToBed.getDate() - 1);
+		goToBed.setHours(1, 3, 0);
+		const wakeUp = new Date(goToBed.getTime() + 8 * 60 * 60 * 1000);
+		this.addToMemory(new OvernightSleepData(goToBed, wakeUp));
+
+		const sleepinessDate = new Date();
+		sleepinessDate.setDate(sleepinessDate.getDate() - 1);
+		sleepinessDate.setHours(14, 38, 0);
+		this.addToMemory(new StanfordSleepinessData(4, sleepinessDate));
+
+		const secondSleepStart = new Date();
+		secondSleepStart.setDate(secondSleepStart.getDate() - 1);
+		secondSleepStart.setHours(23, 11, 0);
+		const secondWakeUp = new Date(secondSleepStart.getTime() + 9 * 60 * 60 * 1000);
+		this.addToMemory(new OvernightSleepData(secondSleepStart, secondWakeUp));
+	}
+
+	public async logOvernightData(sleepData: OvernightSleepData): Promise<void> {
+		await this.ready;
+		this.addToMemory(sleepData);
+		await this.persistData();
+	}
+
+	public async logSleepinessData(sleepData: StanfordSleepinessData): Promise<void> {
+		await this.ready;
+		this.addToMemory(sleepData);
+		await this.persistData();
+	}
+
+	public getAllSleepData(): SleepData[] {
 		return SleepService.AllSleepData;
 	}
 
-	public getAllOvernightData():OvernightSleepData[] {
+	public getAllOvernightData(): OvernightSleepData[] {
 		return SleepService.AllOvernightData;
 	}
 
-	public getAllSleepinessData():StanfordSleepinessData[] {
+	public getAllSleepinessData(): StanfordSleepinessData[] {
 		return SleepService.AllSleepinessData;
 	}
 }

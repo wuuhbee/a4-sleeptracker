@@ -21,7 +21,8 @@ export class HomePage {
 	addIcons({ moon, home, addCircle, personCircle, bedOutline, moonOutline, close });
 	}
 
-	ngOnInit() {
+	async ngOnInit() {
+		await this.sleepService.ready;
 		console.log(this.allSleepData);
 	}
 
@@ -77,7 +78,7 @@ export class HomePage {
 
 		const { data, role } = await modal.onWillDismiss(); // data = OvernightSleepData object
 		if (role === 'log') {
-			this.sleepService.logOvernightData(data);
+			await this.sleepService.logOvernightData(data);
 			// console.log('All Overnight Sleep Data:', this.sleepService.getAllOvernightData().map(d => d.summaryString()));
 		}
 	}
@@ -90,7 +91,7 @@ export class HomePage {
 
 		const {data, role} = await modal.onWillDismiss();  // data = StandfordSleepinessData object
 		if (role === 'log') {
-			this.sleepService.logSleepinessData(data);
+			await this.sleepService.logSleepinessData(data);
 			// console.log('All Sleepiness Data:', this.sleepService.getAllSleepinessData().map(d => d.summaryString()));
 
 		}
