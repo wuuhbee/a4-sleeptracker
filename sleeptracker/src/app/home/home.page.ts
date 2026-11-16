@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton, ActionSheetController, ModalController, IonLabel, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonThumbnail, IonRouterLink } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton, ActionSheetController, ModalController, IonLabel, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonThumbnail } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { moon, home, addCircle, personCircle, bedOutline, moonOutline, close } from 'ionicons/icons';
 import { SleepService } from '../services/sleep.service';
@@ -8,12 +8,13 @@ import { OvernightSleepData } from '../data/overnight-sleep-data';
 import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
 import { AddSleepComponent } from '../add-sleep/add-sleep.component';
 import { AddSleepinessComponent } from '../add-sleepiness/add-sleepiness.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton, IonLabel, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonThumbnail, IonRouterLink],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton, IonLabel, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonThumbnail, RouterLink],
 })
 export class HomePage {
   constructor(public sleepService:SleepService, public actionSheetController: ActionSheetController, public modalController: ModalController) {
