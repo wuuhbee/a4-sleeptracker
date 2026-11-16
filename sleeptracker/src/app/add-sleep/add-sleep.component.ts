@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { OvernightSleepData } from '../data/overnight-sleep-data';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonItem, IonIcon, IonButtons, ModalController, IonDatetime, IonButton, IonInput } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonItem, IonIcon, IonButtons, ModalController, IonDatetime, IonButton, IonInput, ToastController } from '@ionic/angular/standalone';
 
 const localDateTimeValue = (): string => {
   const now = new Date();
@@ -21,7 +21,7 @@ export class AddSleepComponent  implements OnInit {
   sleepEnd = this.sleepStart;
   wakeCount?: number;
 
-  constructor(private modalController: ModalController) { }
+  constructor(private modalController: ModalController, private toastController: ToastController) { }
 
   ngOnInit() {}
 
@@ -30,11 +30,19 @@ export class AddSleepComponent  implements OnInit {
   }
 
   logSleep() {
-    this.modalController.dismiss(new OvernightSleepData(
+    if (this.sleepStart > this.sleepEnd) {
+      this.toastController.create({
+        message: "You can't wake up before you fall asleep! Check the times!",
+        duration: 2000
+      }).then((toast) => {
+        toast.present();
+      });
+    } else {
+      this.modalController.dismiss(new OvernightSleepData(
       new Date(this.sleepStart),
       new Date(this.sleepEnd),
       this.wakeCount
     ), 'log');
+    }
   }
-
 }
