@@ -13,11 +13,22 @@
 <ion-content>
   <ion-item>
     <ion-label position="stacked">When did you sleep?</ion-label>
-    <ion-datetime locale="en-US" [(ngModel)]="sleepStart" presentation="date-time" [preferWheel]="true" id="sleepStart" size="fixed"></ion-datetime>
+    <ion-datetime-button datetime="sleepStartDatetime"></ion-datetime-button>
+    <ion-modal [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime id="sleepStartDatetime" [(ngModel)]="sleepStart"></ion-datetime>
+      </ng-template>
+    </ion-modal>
   </ion-item>
   <ion-item>
     <ion-label position="stacked">When did you wake up?</ion-label>
-    <ion-datetime locale="en-US" [(ngModel)]="sleepEnd" presentation="date-time" [preferWheel]="true" id="sleepEnd" size="fixed"></ion-datetime>
+    <ion-datetime-button datetime="sleepEndDatetime"></ion-datetime-button>
+    <ion-modal [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime id="sleepEndDatetime" [(ngModel)]="sleepEnd"></ion-datetime>
+      </ng-template>
+    </ion-modal>
+
   </ion-item>
   <ion-item>
     <ion-label position="stacked">How many times did you wake up during the night?</ion-label>

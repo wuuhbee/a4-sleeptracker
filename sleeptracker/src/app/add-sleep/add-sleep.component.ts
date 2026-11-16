@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { OvernightSleepData } from '../data/overnight-sleep-data';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonItem, IonIcon, IonButtons, ModalController, IonDatetime, IonButton, IonInput, ToastController } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonItem, IonIcon, IonButtons, ModalController, IonDatetime, IonButton, IonInput, ToastController, IonModal, IonDatetimeButton } from '@ionic/angular/standalone';
 
 const localDateTimeValue = (): string => {
   const now = new Date();
@@ -14,11 +14,11 @@ const localDateTimeValue = (): string => {
   selector: 'app-add-sleep',
   templateUrl: './add-sleep.component.html',
   styleUrls: ['./add-sleep.component.scss'],
-  imports: [FormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonItem, IonIcon, IonButtons, IonDatetime, IonButton, IonInput]
+  imports: [FormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonItem, IonIcon, IonButtons, IonDatetime, IonButton, IonInput, IonModal, IonDatetimeButton]
 })
 export class AddSleepComponent  implements OnInit {
   sleepStart = localDateTimeValue();
-  sleepEnd = this.sleepStart;
+  sleepEnd = localDateTimeValue();
   wakeCount?: number;
 
   constructor(private modalController: ModalController, private toastController: ToastController) { }
