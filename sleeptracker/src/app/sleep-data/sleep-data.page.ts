@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton, ActionSheetController, ModalController, IonLabel, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonThumbnail, IonFab, IonFabButton, IonFabList } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton, ActionSheetController, ModalController, IonLabel, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonThumbnail, IonFab, IonFabButton, IonFabList, IonSegment, IonSegmentButton, SegmentChangeEventDetail, IonFooter } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { moon, home, addCircle, personCircle, bedOutline, moonOutline, close, sparkles } from 'ionicons/icons';
 import { SleepService } from '../services/sleep.service';
@@ -17,9 +17,10 @@ import { RouterLink } from '@angular/router';
   templateUrl: './sleep-data.page.html',
   styleUrls: ['./sleep-data.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonTabs, IonTabButton, IonTabBar, IonIcon, IonLabel, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonThumbnail, RouterLink, IonFab, IonFabButton, IonFabList ]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonTabs, IonTabButton, IonTabBar, IonIcon, IonLabel, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonThumbnail, RouterLink, IonFab, IonFabButton, IonFabList, IonSegment, IonSegmentButton, IonFooter]
 })
 export class SleepDataPage implements OnInit {
+  selectedSegment: 'overnight' | 'sleepiness' = 'overnight';
 
   constructor(public sleepService:SleepService, public actionSheetController: ActionSheetController, public modalController: ModalController) {
 	addIcons({ moon, home, addCircle, personCircle, bedOutline, moonOutline, close, sparkles });
@@ -32,6 +33,13 @@ export class SleepDataPage implements OnInit {
 
 	get allSleepData() {
 		return SleepService.AllSleepData;
+	}
+
+	onSegmentChanged(event: CustomEvent<SegmentChangeEventDetail>) {
+		const value = event.detail.value;
+		if (value === 'overnight' || value === 'sleepiness') {
+		  this.selectedSegment = value;
+		}
 	}
 
 	presentActionSheet(event: Event) {
@@ -118,8 +126,7 @@ export class SleepDataPage implements OnInit {
 		return averageSleepDuration.toFixed(2) + " hours";
 	}
 
-	getCurrentTime(): string {
-		const now = new Date();
-		return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-	}
+  parseSleepData() {
+
+  }
 }

@@ -1,3 +1,15 @@
 ion-fab {
-  bottom: calc(66px + var(--ion-safe-area-bottom, 0px));
+  // bottom: calc(66px + var(--ion-safe-area-bottom, 0px));
+  margin-bottom: 12px;
+  margin-right: 12px;
+}
+
+ion-segment-button {
+  --indicator-color: #08a391;
+}
+
+ion-segment-button.ios {
+  --color: #08a391;
+  --color-checked: #fff;
+  --border-radius: 20px;
 }

@@ -11,26 +11,41 @@
     </ion-toolbar>
   </ion-header>
   <!-- Add list of all the sleep logs in cards -->
-   <ion-card></ion-card>
-   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+  <ion-card>
+    <ion-toolbar>
+      <ion-segment [value]="selectedSegment" (ionChange)="onSegmentChanged($event)">
+        <ion-segment-button value="overnight">
+          <ion-label>Overnight</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="sleepiness">
+          <ion-label>Sleepiness</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+    @if (selectedSegment === 'overnight') {
+      <div>Overnight Data Here</div>
+    } @else {
+      <div>Sleepiness Data Here</div>
+    }
+  </ion-card>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button>
       <ion-icon name="add-circle"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
       <ion-fab-button (click)="addSleep()">
         <ion-icon name="bed-outline"></ion-icon>
-        <!-- <ion-label>Log Overnight Sleep</ion-label> -->
       </ion-fab-button>
       <ion-fab-button (click)="addSleepiness()">
         <ion-icon name="moon-outline"></ion-icon>
-        <!-- <ion-label>Log Sleepiness</ion-label> -->
       </ion-fab-button>
     </ion-fab-list>
   </ion-fab>
 </ion-content>
 
-<ion-tabs slot="bottom">
-  <ion-tab-bar>
+<ion-footer>
+  <ion-tab-bar slot="bottom">
     <ion-tab-button routerLink="/home">
       <ion-icon name="home"></ion-icon>
       <ion-label>Home</ion-label>
@@ -48,4 +63,4 @@
       <ion-label>Profile</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
-</ion-tabs>
+</ion-footer>
