@@ -15,7 +15,7 @@ export class OvernightSleepData extends SleepData {
 	override summaryString():string {
 		var difference_ms = this.getSleepDurationMS();		    
 		// Convert to hours and minutes
-		return Math.floor(difference_ms / (1000*60*60)) + " hours, " + Math.floor(difference_ms / (1000*60) % 60) + " minutes, " + this.wakeCount + " interruptions";
+		return Math.floor(difference_ms / (1000*60*60)) + " hours, " + Math.floor(difference_ms / (1000*60) % 60) + " minutes, with " + this.wakeCount + " interruption(s)";
 	}
 
 	getSleepDurationMS():number {
