@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton, ActionSheetController, ModalController, IonLabel, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonThumbnail, IonFab, IonFabButton, IonFabList, IonSegment, IonSegmentButton, SegmentChangeEventDetail, IonFooter } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton, ActionSheetController, ModalController, IonLabel, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonThumbnail, IonFab, IonFabButton, IonFabList, IonSegment, IonSegmentButton, SegmentChangeEventDetail, IonFooter, IonList, IonItemSliding, IonItemOption, IonItemOptions } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { moon, home, addCircle, personCircle, bedOutline, moonOutline, close, sparkles } from 'ionicons/icons';
 import { SleepService } from '../services/sleep.service';
@@ -17,7 +17,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './sleep-data.page.html',
   styleUrls: ['./sleep-data.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonTabs, IonTabButton, IonTabBar, IonIcon, IonLabel, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonThumbnail, RouterLink, IonFab, IonFabButton, IonFabList, IonSegment, IonSegmentButton, IonFooter]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonTabs, IonTabButton, IonTabBar, IonIcon, IonLabel, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonThumbnail, RouterLink, IonFab, IonFabButton, IonFabList, IonSegment, IonSegmentButton, IonFooter, IonList, IonItemSliding, IonItemOption, IonItemOptions]
 })
 export class SleepDataPage implements OnInit {
   selectedSegment: 'overnight' | 'sleepiness' = 'overnight';
@@ -126,7 +126,9 @@ export class SleepDataPage implements OnInit {
 		return averageSleepDuration.toFixed(2) + " hours";
 	}
 
-  parseSleepData() {
-
+  get overnightSleepData() {
+    return [...this.sleepService.getAllOvernightData()].sort(
+      (a, b) => b.getSleepStart().getTime() - a.getSleepStart().getTime()
+    );
   }
 }

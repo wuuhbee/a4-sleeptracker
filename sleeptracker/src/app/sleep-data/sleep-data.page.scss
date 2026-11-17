@@ -1,15 +1,42 @@
+:root {
+    --primary-bg-color: #28536C;
+    --secondary-bg-color: #07202F;
+    --main-color: #6895AF;
+    --secondary-color: #14384E;
+    --third-color: #43708B;
+    --compliment-bg: #FFCE91;
+    --compliment-text: #4A2C07;
+}
+
+.ios{
+  --ion-background-color: #28536C;
+}
+
 ion-fab {
   // bottom: calc(66px + var(--ion-safe-area-bottom, 0px));
   margin-bottom: 12px;
   margin-right: 12px;
 }
 
-ion-segment-button {
-  --indicator-color: #08a391;
+ion-fab-button {
+  --background: #FFCE91;
+  --background-activated: #6895AF;
 }
 
-ion-segment-button.ios {
-  --color: #08a391;
-  --color-checked: #fff;
+ion-tab-bar {
+  --color-selected: #FFCE91;
+}
+
+ion-segment {
+  --background: #07202F;
+}
+
+ion-segment-button {
+  --indicator-color: #43708B;
+}
+
+ion-segment-button {
+  --color: var(--main-color);
+  --color-checked: var(--third-color);
   --border-radius: 20px;
 }
