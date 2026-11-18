@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton, ActionSheetController, ModalController, IonLabel, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonThumbnail } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton, ActionSheetController, ModalController, IonLabel, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonThumbnail, IonFooter , IonFab, IonFabButton, IonFabList} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { moon, home, addCircle, personCircle, bedOutline, moonOutline, close } from 'ionicons/icons';
 import { SleepService } from '../services/sleep.service';
@@ -14,7 +14,7 @@ import { RouterLink } from '@angular/router';
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton, IonLabel, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonThumbnail, RouterLink],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonIcon, IonTabs, IonTabBar, IonTabButton, IonButton, IonLabel, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonThumbnail, RouterLink, IonFooter, IonFab, IonFabButton, IonFabList],
 })
 export class HomePage {
   constructor(public sleepService:SleepService, public actionSheetController: ActionSheetController, public modalController: ModalController) {

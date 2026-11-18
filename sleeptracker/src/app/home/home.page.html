@@ -29,12 +29,25 @@
     </ion-card>
   </ion-item>
 
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button>
+      <ion-icon name="add-circle"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button (click)="addSleep()">
+        <ion-icon name="bed-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="addSleepiness()">
+        <ion-icon name="moon-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
 </ion-content>
 
-<ion-tabs slot="bottom">
-  <ion-tab-bar>
-    <!-- TODO: Add routing and links for each tab -->
-    <ion-tab-button> 
+<ion-footer>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button [selected]="true"> 
       <ion-icon name="home"></ion-icon>
       <ion-label>Home</ion-label>
     </ion-tab-button>
@@ -51,4 +64,4 @@
       <ion-label>Profile</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
-</ion-tabs>
+</ion-footer>
