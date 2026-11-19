@@ -1,11 +1,13 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Past Sleep Logs</ion-title>
+    <ion-title color="primary">
+      <ion-icon name="moon" size="large"></ion-icon>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <ion-header color="secondary">
     <ion-toolbar>
       <ion-title size="large">Past Sleep Logs</ion-title>
     </ion-toolbar>
@@ -20,32 +22,49 @@
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
+  <ion-card> <!-- check about making the listing into a scrollable card so the fab isn't in the way -->
   @if (selectedSegment === 'overnight') {
     <ion-list>
         @for (data of overnightSleepData; track data){
         <ion-item-sliding>
           <ion-item>
-            <ion-thumbnail>
-              <ion-icon name="moon"></ion-icon>
-            </ion-thumbnail>
+            <!-- change color of icon based on the amount of sleep -->
+            <ion-icon name="moon" slot="start"></ion-icon>
             <ion-label>
               <h1>{{data.dateString()}}</h1>
-              You slept for {{data.summaryString()}} 
-              from {{data.getSleepStart().toLocaleString([],{hour: 'numeric', minute: '2-digit'})}}
-              to {{data.getSleepEnd().toLocaleString([],{hour: 'numeric', minute: '2-digit'})}}
+              You slept for {{data.summaryString()}}
+              <p>Duration: {{data.getSleepStart().toLocaleString([],{hour: 'numeric', minute: '2-digit'})}}
+              to {{data.getSleepEnd().toLocaleString([],{hour: 'numeric', minute: '2-digit'})}}</p>
             </ion-label>
           </ion-item>
-
-          <ion-item-options>
-            <ion-item-option color="danger">Delete</ion-item-option>
+          <ion-item-options side="start">
+            <ion-item-option color="danger" (click)="removeLog(data)">Delete</ion-item-option>
           </ion-item-options>
         </ion-item-sliding>
       }
     </ion-list>
   } @else {
-    <div>Sleepiness Data Here</div>
-    <!-- finish the overnight data then reuse it here -->
+     <ion-list>
+        @for (data of sleepyData; track data){
+        <ion-item-sliding>
+          <ion-item>
+            <!-- change color of icon based on the amount of sleep -->
+            <ion-icon name="bed-outline" slot="start"></ion-icon>
+            <ion-label>
+              <h1>{{data.dateString()}}</h1>
+              {{data.loggedTime}}: sleepiness score of 
+              {{data.sleepinessScore}}
+              <p>{{data.summaryString()}}</p>
+            </ion-label>
+          </ion-item>
+          <ion-item-options side="start">
+            <ion-item-option color="danger" (click)="removeLog(data)">Delete</ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      }
+    </ion-list>
   }
+  </ion-card>
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button>
@@ -63,7 +82,7 @@
 </ion-content>
 
 <ion-footer>
-  <ion-tab-bar slot="bottom">
+  <ion-tab-bar slot="bottom" color="tertiary">
     <ion-tab-button routerLink="/home">
       <ion-icon name="home"></ion-icon>
       <ion-label>Home</ion-label>

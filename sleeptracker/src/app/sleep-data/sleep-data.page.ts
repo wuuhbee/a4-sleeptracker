@@ -130,9 +130,15 @@ export class SleepDataPage implements OnInit {
 		return averageSleepDuration.toFixed(2) + " hours";
 	}
 
-  get overnightSleepData() {
+  get overnightSleepData(): OvernightSleepData[] {
     return [...this.sleepService.getAllOvernightData()].sort(
       (a, b) => b.getSleepStart().getTime() - a.getSleepStart().getTime()
+    );
+  }
+
+  get sleepyData(): StanfordSleepinessData[] {
+    return [...this.sleepService.getAllSleepinessData()].sort(
+      (a, b) => b.loggedAt.getTime() - a.loggedAt.getTime()
     );
   }
 }
