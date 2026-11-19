@@ -21,11 +21,15 @@ export class StanfordSleepinessData extends SleepData {
 		this.loggedAt = loggedAt;
 	}
 
-	getSleepinessScore():number {
+	get sleepinessScore():number {
 		return this.loggedValue;
 	}
 
 	override summaryString():string {
 		return this.loggedValue + ": " + StanfordSleepinessData.ScaleValues[this.loggedValue];
+	}
+
+	get loggedTime(): string {
+		return this.loggedAt.toLocaleString([],{hour: 'numeric', minute: '2-digit'});
 	}
 }
