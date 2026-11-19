@@ -1,16 +1,16 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
+    <ion-title color="primary">
       <ion-icon name="moon" size="large"></ion-icon>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header>
+  <ion-header color="secondary">
     <ion-toolbar>
       <ion-title size="large">Hi John!</ion-title>
-      <h1>It is now {{getCurrentTime()}}</h1>
+      <p>It is now {{getCurrentTime()}}</p>
     </ion-toolbar>
   </ion-header>
   <ion-item>
@@ -46,7 +46,7 @@
 </ion-content>
 
 <ion-footer>
-  <ion-tab-bar slot="bottom">
+  <ion-tab-bar slot="bottom" color="tertiary">
     <ion-tab-button [selected]="true"> 
       <ion-icon name="home"></ion-icon>
       <ion-label>Home</ion-label>
