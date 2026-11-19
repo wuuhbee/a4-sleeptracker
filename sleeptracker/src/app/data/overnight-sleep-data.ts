@@ -15,7 +15,7 @@ export class OvernightSleepData extends SleepData {
 	override summaryString():string {
 		var difference_ms = this.getSleepDurationMS();		    
 		// Convert to hours and minutes
-		return Math.floor(difference_ms / (1000*60*60)) + " hours, " + Math.floor(difference_ms / (1000*60) % 60) + " minutes, with " + this.wakeCount + " interruption(s)";
+		return Math.floor(difference_ms / (1000*60*60)) + " hours and " + Math.floor(difference_ms / (1000*60) % 60) + " minutes. You woke up " + this.wakeCount + " time(s).";
 	}
 
 	getSleepDurationMS():number {
@@ -37,6 +37,6 @@ export class OvernightSleepData extends SleepData {
 	}
 
 	override dateString():string {
-		return "Night of " + this.sleepStart.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+		return this.sleepStart.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 	}
 }
