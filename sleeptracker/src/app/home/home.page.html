@@ -10,21 +10,64 @@
   <ion-header color="secondary">
     <ion-toolbar>
       <ion-title size="large">Hi John!</ion-title>
-      <p>It is now {{getCurrentTime()}}</p>
+      <h1>It is now {{getCurrentTime()}}</h1>
     </ion-toolbar>
   </ion-header>
   <ion-item>
-    <!-- Add graph to show the last 7 days of sleep data -->
-    <ion-card>
+    <ion-card class="sleep-chart-card">
       <ion-card-header>
-        <ion-card-title>Last 7 days:</ion-card-title>
-        <ion-thumbnail slot="end">
-          <ion-icon name="bed-outline"></ion-icon>
-        </ion-thumbnail>
-        <p>AVERAGE: {{averageSleepDurationLast7Days()}}</p>
+        <div class="chart-heading">
+          <div>
+            <ion-card-title>Overnight Sleep</ion-card-title>
+            <p class="chart-subtitle">Last seven nights</p>
+          </div>
+          <div class="average-stat">
+            <span class="average-label">DAILY AVERAGE</span>
+            <strong>{{averageSleepDurationLast7Days()}}</strong>
+          </div>
+        </div>
       </ion-card-header>
       <ion-card-content>
-        <!-- Graph content goes here -->
+        @if (hasSleepChartData) {
+          <div class="chart-scroll">
+            <svg class="sleep-chart" viewBox="0 0 360 222" role="img"
+              aria-label="Sleep duration for the last seven nights, measured in hours">
+              <line x1="42" y1="24" x2="352" y2="24" class="grid-line" />
+              <line x1="42" y1="72" x2="352" y2="72" class="grid-line goal-line" />
+              <line x1="42" y1="120" x2="352" y2="120" class="grid-line" />
+              <line x1="42" y1="168" x2="352" y2="168" class="grid-line" />
+
+              <text x="34" y="28" class="axis-label" text-anchor="end">12</text>
+              <text x="34" y="76" class="axis-label" text-anchor="end">8</text>
+              <text x="34" y="124" class="axis-label" text-anchor="end">4</text>
+              <text x="34" y="172" class="axis-label" text-anchor="end">0</text>
+              <text x="350" y="66" class="goal-label" text-anchor="end">8h GOAL</text>
+
+              @for (bar of sleepChartBars; track bar.dateLabel + bar.label) {
+                @if (bar.hours > 0) {
+                  <rect [attr.x]="bar.x - 12" [attr.y]="bar.y" width="24" [attr.height]="bar.height"
+                    rx="12" [attr.fill]="bar.isToday ? '#ffce91' : '#6895af'"
+                    class="sleep-bar" />
+                  <text [attr.x]="bar.x" [attr.y]="bar.y - 9" class="bar-value" text-anchor="middle">
+                    {{bar.hours.toFixed(1)}}h
+                  </text>
+                }
+                <text [attr.x]="bar.x" y="194" class="day-label" text-anchor="middle">{{bar.label}}</text>
+                <text [attr.x]="bar.x" y="211" class="date-label" text-anchor="middle">{{bar.dateLabel}}</text>
+              }
+            </svg>
+          </div>
+          <div class="chart-legend">
+            <span><i class="legend-dot"></i> Sleep</span>
+            <span><i class="goal-dash"></i> 8-hour goal</span>
+          </div>
+        } @else {
+          <div class="empty-chart">
+            <ion-icon name="bed-outline"></ion-icon>
+            <p>No sleep logged in the last seven days.</p>
+            <span>Log a night of sleep to see your track your recent sleep!</span>
+          </div>
+        }
       </ion-card-content>
     </ion-card>
   </ion-item>

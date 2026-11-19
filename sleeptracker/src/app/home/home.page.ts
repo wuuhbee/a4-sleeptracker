@@ -10,6 +10,16 @@ import { AddSleepComponent } from '../add-sleep/add-sleep.component';
 import { AddSleepinessComponent } from '../add-sleepiness/add-sleepiness.component';
 import { RouterLink } from '@angular/router';
 
+interface SleepChartBar {
+	label: string;
+	dateLabel: string;
+	hours: number;
+	x: number;
+	y: number;
+	height: number;
+	isToday: boolean;
+}
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -97,21 +107,53 @@ export class HomePage {
 	}
 
 	averageSleepDurationLast7Days(): string {
-		const now = new Date();
-		const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-
-		const last7DaysSleepData = this.sleepService.getAllOvernightData().filter(data => data.loggedAt >= sevenDaysAgo);
-		
-		if (last7DaysSleepData.length === 0) {
-			return "No sleep data for the last 7 days.";
+		const daysWithSleep = this.getLastSevenDays().filter(day => day.hours > 0);
+		if (daysWithSleep.length === 0) {
+			return 'No data yet';
 		}
 
-		const totalSleepDuration = last7DaysSleepData.reduce((sum, data) => {
-			return sum + data.getSleepDurationMS() / (1000 * 60 * 60); // Convert milliseconds to hours
-		}, 0);
-		const averageSleepDuration = totalSleepDuration / last7DaysSleepData.length;
+		const totalSleepDuration = daysWithSleep.reduce((sum, day) => sum + day.hours, 0);
+		const averageSleepDuration = totalSleepDuration / daysWithSleep.length;
 
-		return averageSleepDuration.toFixed(2) + " hours";
+		return `${averageSleepDuration.toFixed(1)} hours`;
+	}
+
+	get hasSleepChartData(): boolean {
+		return this.getLastSevenDays().some(day => day.hours > 0);
+	}
+
+	get sleepChartBars(): SleepChartBar[] {
+		const baseline = 168;
+		const chartHeight = 144;
+		const maxHours = 12;
+
+		return this.getLastSevenDays().map((day, index) => {
+			const height = Math.min(day.hours, maxHours) / maxHours * chartHeight;
+			return {
+				label: day.date.toLocaleDateString([], { weekday: 'short' }),
+				dateLabel: String(day.date.getDate()),
+				hours: day.hours,
+				x: 58 + index * 45,
+				y: baseline - height,
+				height,
+				isToday: index === 6
+			};
+		});
+	}
+
+	private getLastSevenDays(): { date: Date; hours: number }[] {
+		const today = new Date();
+		const sleepData = this.sleepService.getAllOvernightData();
+
+		return Array.from({ length: 7 }, (_, index) => {
+			const date = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 6 + index);
+			const nextDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
+			const hours = sleepData
+				.filter(sleep => sleep.getSleepStart() >= date && sleep.getSleepStart() < nextDate)
+				.reduce((total, sleep) => total + sleep.getSleepDurationMS() / 3_600_000, 0);
+
+			return { date, hours };
+		});
 	}
 
 	getCurrentTime(): string {
