@@ -1,23 +1,26 @@
---Readme document for *author(s)*, *email(s)*, *UCI id(s)*--
+--Readme document for *Melyn Lim*, *melynl@uci.edu*, *44314650*--
 
 1. How many assignment points do you believe you completed (replace the *'s with your numbers)?
 
 */10
-- */1 The ability to log overnight sleep
-- */1 The ability to log sleepiness during the day
-- */1 The ability to view these two categories of logged data
-- */2 Either using a native device resource or backing up logged data
+- 1/1 The ability to log overnight sleep
+- 1/1 The ability to log sleepiness during the day
+- 1/1 The ability to view these two categories of logged data
+- 2/2 Either using a native device resource or backing up logged data
 - */2 Following good principles of mobile design
-- */2 Creating a compelling app
+- 1/2 Creating a compelling app
 - */1 A readme and demo video which explains how these features were implemented and their design rationale
 
 2. How long, in hours, did it take you to complete this assignment?
-
+- currently: 13 hours
 
 
 3. What online resources did you consult when completing this assignment? (list specific URLs)
-
-
+- pallete picker: https://paletton.com/#uid=23u0u0klllldN-eh-rnp6fjsT9g
+- ionic themeing: https://ionicframework.com/docs/theming/css-variables
+- icons: https://ionic.io/ionicons
+- ionic doc: https://ionicframework.com/docs/
+- color generator: https://ionicframework.com/docs/theming/color-generator
 
 4. What classmates or other individuals did you consult as part of this assignment? What did you discuss?
 
@@ -35,7 +38,7 @@
 
 
 7. Did you design your app specifically for iOS or Android, or both?
-
+- Specifically for iOS.
 
 
 8. How can a person log overnight sleep in your app? Why did you choose to support logging overnight sleep in this way?
