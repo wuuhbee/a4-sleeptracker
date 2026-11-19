@@ -101,7 +101,7 @@ export class SleepService {
 					type: 'sleepiness',
 					id: data.id,
 					loggedAt: data.loggedAt.toISOString(),
-					score: data.getSleepinessScore()
+					score: data.sleepinessScore
 				};
 			}
 
