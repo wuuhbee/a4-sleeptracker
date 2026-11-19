@@ -20,4 +20,9 @@ export class StorageService {
     const storage = await this.storageReady;
     return storage.get(key);
   }
+
+  async remove<T>(key: string): Promise<void> {
+    const storage = await this.storageReady;
+    return storage.remove(key);
+  }
 }

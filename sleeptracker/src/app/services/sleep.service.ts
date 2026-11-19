@@ -155,4 +155,27 @@ export class SleepService {
 	public getAllSleepinessData(): StanfordSleepinessData[] {
 		return SleepService.AllSleepinessData;
 	}
+
+	public async removeLog(data: SleepData): Promise<void> {
+		await this.ready;
+		const index = SleepService.AllSleepData.findIndex(log => log.id === data.id);
+		if (index === -1) {
+			return;
+		}
+
+		SleepService.AllSleepData.splice(index, 1);
+		if (data instanceof OvernightSleepData) {
+			const overnightIndex = SleepService.AllOvernightData.findIndex(log => log.id === data.id);
+			if (overnightIndex !== -1) {
+				SleepService.AllOvernightData.splice(overnightIndex, 1);
+			}
+		} else if (data instanceof StanfordSleepinessData) {
+			const sleepinessIndex = SleepService.AllSleepinessData.findIndex(log => log.id === data.id);
+			if (sleepinessIndex !== -1) {
+				SleepService.AllSleepinessData.splice(sleepinessIndex, 1);
+			}
+		}
+
+		await this.persistData();
+	}
 }

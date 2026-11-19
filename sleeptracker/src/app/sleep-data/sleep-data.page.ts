@@ -108,6 +108,10 @@ export class SleepDataPage implements OnInit {
 		}
 	}
 
+  async removeLog(data: SleepData): Promise<void> {
+    await this.sleepService.removeLog(data);
+  }
+
 	averageSleepDurationLast7Days(): string {
 		const now = new Date();
 		const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
